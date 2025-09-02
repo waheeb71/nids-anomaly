@@ -19,9 +19,10 @@ class AnomalyDetector:
             self.ae_loaded = False
 
     def predict_single(self, sample: Dict) -> Dict:
-        # تحويل البيانات وتقييسها
-        x = transform_single(sample, scaler=self.scaler).reshape(1, -1)
-
+       
+        features_only = {k: sample[k] for k in FEATURES if k in sample}
+      
+        x = transform_single(features_only, scaler=self.scaler).reshape(1, -1)
         # Isolation Forest
         if_score = self.if_model.decision_function(x)[0]
         if_anomaly = int(if_score < IF_THRESHOLD)
@@ -39,17 +40,18 @@ class AnomalyDetector:
             ae_score = mse
             ae_anomaly = int(mse > AE_RECON_ERROR)
 
-        # القرار النهائي: True إذا أي نموذج كشف شذوذ
+       
         votes = [if_anomaly, oc_anomaly, ae_anomaly]
         final_anomaly = int(sum(votes) >= 2)
 
-        # قيمة timestamp افتراضية إذا لم تكن موجودة
+     
         timestamp = sample.get('timestamp', datetime.now().timestamp())
         src_ip = sample.get('src_ip', 'unknown')
         src_port = sample.get('src_port', 'unknown')
+        
 
         # Host compromised flag
-        host_compromised = final_anomaly and sum(votes) >= 2  # تعديل حسب حاجتك
+        host_compromised = final_anomaly and sum(votes) >= 2  
 
         result = {
             'timestamp': timestamp,
@@ -62,19 +64,23 @@ class AnomalyDetector:
             'ae_score': ae_score,
             'ae_anomaly': bool(ae_anomaly),
             'final_anomaly': bool(final_anomaly),
-            'window_anomaly_count': 0,  # يمكن تعديله لاحقًا إذا استخدمت نافذة
+            'window_anomaly_count': 0,  
             'host_compromised': bool(host_compromised)
         }
 
-        # طباعة التنبيهات
+
         if result['final_anomaly']:
             print(f"[ALERT] Packet from {src_ip}:{src_port} detected as anomaly!")
         if result['host_compromised']:
             print(f"[CRITICAL] Host {src_ip} flagged as compromised!")
 
         return result
-
-    def predict_batch(self, df: pd.DataFrame) -> pd.DataFrame:
+    def predict_batch(self, data) -> pd.DataFrame:
+   
+        if isinstance(data, list):
+          df = pd.DataFrame(data)
+        else:
+          df = data.copy()
         X = transform_df(df, scaler=self.scaler).values
 
         # Isolation Forest
@@ -94,9 +100,9 @@ class AnomalyDetector:
             ae_scores = mses
             ae_dec = (mses > AE_RECON_ERROR).astype(int)
 
-        # القرار النهائي
+       
         final = ((if_dec + oc_dec + ae_dec) >= 2).astype(int)
-        host_compromised = final.copy()  # أو حسب منطقك
+        host_compromised = final.copy() 
 
         out = df.copy()
         out['timestamp'] = df.get('timestamp', pd.Series([datetime.now().timestamp()]*len(df)))
@@ -112,12 +118,12 @@ class AnomalyDetector:
         out['final_anomaly'] = final
         out['window_anomaly_count'] = 0
         out['host_compromised'] = host_compromised
-
-        # طباعة التنبيهات لكل صف
         for i, row in out.iterrows():
             if row['final_anomaly']:
                 print(f"[ALERT] Packet from {row['src_ip']}:{row['src_port']} detected as anomaly!")
             if row['host_compromised']:
                 print(f"[CRITICAL] Host {row['src_ip']} flagged as compromised!")
 
-        return out
+        return out.to_dict(orient="records")
+
+      

@@ -2,7 +2,7 @@ import os
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from joblib import dump, load
-from config import FEATURES, SCALER_PATH, MODEL_DIR
+from src.config import FEATURES, SCALER_PATH, MODEL_DIR
 
 def fit_scaler(df: pd.DataFrame):
     scaler = StandardScaler()

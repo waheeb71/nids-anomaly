@@ -4,7 +4,7 @@ from sklearn.ensemble import IsolationForest
 from sklearn.svm import OneClassSVM
 from tensorflow.keras import layers, models
 from joblib import dump, load
-from config import MODEL_DIR, IF_PATH, OCSVM_PATH, AE_PATH
+from src.config import MODEL_DIR, IF_PATH, OCSVM_PATH, AE_PATH
 
 def train_isolation_forest(X, **kwargs):
     clf = IsolationForest(n_estimators=200, contamination=0.01, random_state=42, **kwargs)

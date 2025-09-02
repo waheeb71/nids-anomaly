@@ -17,22 +17,15 @@ class RealTimeNIDS:
         self.window = deque(maxlen=window_size)
 
     def process_packet(self, packet: Dict) -> Dict:
-        # استخراج الميزات من الحزمة
-        features = extract_features_from_packet(packet)
+       
+        result = self.detector.predict_single(packet)
 
-        # التنبؤ باستخدام جميع النماذج
-   
-        result = self.detector.predict_single(features)
-
-        # إضافة معلومات إضافية
+     
         result_out = {
-            "timestamp": time.time(),
-            "src_ip": packet.get("src_ip"),
-            "src_port": packet.get("src_port"),
-            **result
-        }
+        **result
+    }
 
-        # تحديث النافذة إذا مفعلة
+     
         if self.use_window:
             self.window.append(result_out["final_anomaly"])
             window_anomalies = sum(self.window)
@@ -43,7 +36,7 @@ class RealTimeNIDS:
             result_out["window_anomaly_count"] = 0
             result_out["host_compromised"] = False
 
-        # تحسين العرض: طباعة تنبيه إن وجد
+      
         if result_out["final_anomaly"]:
             print(f"[ALERT] Packet from {result_out['src_ip']}:{result_out['src_port']} detected as anomaly!")
         elif self.use_window and result_out["host_compromised"]:

@@ -5,10 +5,10 @@ from datetime import datetime
 
 nids = RealTimeNIDS(window_size=10, threshold=3)
 
-# توليد 20 حزمة عادية + 5 حزم شاذة لنفس IP
+
 packets = []
 
-# حزم عادية
+
 for i in range(20):
     pkt = {
         "src_ip": f"10.0.{random.randint(1,5)}.{random.randint(1,254)}",
@@ -39,7 +39,7 @@ for i in range(20):
     }
     packets.append(pkt)
 
-# حزم شاذة لنفس IP
+
 for i in range(5):
     pkt = {
         "src_ip": "10.0.1.50",
@@ -70,9 +70,9 @@ for i in range(5):
     }
     packets.append(pkt)
 
-# معالجة الحزم
+
 results = nids.process_batch(packets)
 
-# عرض النتائج النهائية
+
 for r in results:
     print(r)

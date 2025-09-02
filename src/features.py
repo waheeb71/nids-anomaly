@@ -3,7 +3,7 @@ from config import FEATURES
 
 def extract_features_from_packet(packet: Dict) -> Dict:
     f = {k: float(packet.get(k, 0.0)) for k in FEATURES}
-    # compute simple ratios if missing
+ 
     try:
         if f.get('pkts_bwd', 0) == 0:
             f['fwd_bwd_ratio_pkts'] = float('inf') if f.get('pkts_fwd',0)>0 else 1.0
