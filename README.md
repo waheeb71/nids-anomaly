@@ -164,12 +164,18 @@ for res in results:
 nids-anomaly/
 │
 ├─ src/
-│  └─ a.py                # Example detection script
-├─ features.py            # Feature extraction from packets
-├─ inference.py           # Anomaly detection models
-├─ realtime.py            # Real-time NIDS
-└─ README.md              # Project documentation
-```
+│  ├─ __pycache__/         # Python cache files
+│  ├─ __init__.py          # Marks the directory as a Python package
+│  ├─ config.py            # Project settings / configuration
+│  ├─ features.py          # Feature extraction from packets
+│  ├─ inference.py         # Running models on data
+│  ├─ models.py            # Definitions of anomaly detection models
+│  ├─ preprocess.py        # Data preprocessing and preparation
+│  ├─ realtime.py          # Running the NIDS in real-time
+│  ├─ test.py              # Script for testing
+│  └─ utils.py             # General helper functions
+│
+└─ README.md               # Project documentation
 
 ---
 
@@ -203,6 +209,8 @@ MIT License – see [LICENSE](LICENSE).
 **العربية:** هيب مهيوب الشرعبي
 
 ```
-
 ---
+## اللغة / Language
+
+📖 [اقرأ النسخة العربية](READMEAR.md)
 
