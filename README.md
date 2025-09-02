@@ -55,7 +55,19 @@ pip install -r requirements.txt
 ```
 
 ---
+## Training the Model
 
+The models can be retrained on your own dataset (e.g., `large_train_with_ip.csv`).
+The dataset should contain network traffic features such as packet sizes, flow duration, rates, flags, etc.
+
+1. Place your training dataset (CSV) in the project folder.
+2. Run the training script:
+
+```bash
+python scripts/train_all.py data/large_train_with_ip.csv
+```
+
+---
 ## Usage
 
 ### 1. Test a single packet
@@ -162,7 +174,7 @@ MIT License
 
 ---
 
-```
 
----
+
+
 
