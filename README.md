@@ -176,7 +176,7 @@ nids-anomaly/
 │  └─ utils.py             # General helper functions
 │
 └─ README.md               # Project documentation
-
+```
 ---
 
 ## Notes
@@ -206,9 +206,9 @@ MIT License – see [LICENSE](LICENSE).
 ## Author / المطور
 
 **English:** Waheeb Mahyoob Al-Sharabi
-**العربية:** هيب مهيوب الشرعبي
+**العربية:** وهيب مهيوب الشرعبي
 
-```
+
 ---
 ## اللغة / Language
 
