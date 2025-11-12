@@ -6,11 +6,7 @@ from inference import AnomalyDetector
 
 class RealTimeNIDS:
     def __init__(self, window_size: int = 50, use_window: bool = True, threshold: int = 3):
-        """
-        window_size: عدد الحزم التي تُخزن في النافذة.
-        use_window: تفعيل/تعطيل نافذة التتبع.
-        threshold: عدد الحزم الشاذة لتحديد المضيف كمخترق.
-        """
+      
         self.detector = AnomalyDetector()
         self.use_window = use_window
         self.threshold = threshold
@@ -45,9 +41,7 @@ class RealTimeNIDS:
         return result_out
 
     def process_batch(self, packets: List[Dict]) -> List[Dict]:
-        """
-        معالجة مجموعة من الحزم دفعة واحدة
-        """
+     
         results = []
         for pkt in packets:
             results.append(self.process_packet(pkt))
