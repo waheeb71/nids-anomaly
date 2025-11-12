@@ -23,15 +23,15 @@ class AnomalyDetector:
         features_only = {k: sample[k] for k in FEATURES if k in sample}
       
         x = transform_single(features_only, scaler=self.scaler).reshape(1, -1)
-        # Isolation Forest
+   
         if_score = self.if_model.decision_function(x)[0]
         if_anomaly = int(if_score < IF_THRESHOLD)
 
-        # One-Class SVM
+       
         oc_score = self.ocsvm_model.decision_function(x)[0]
         oc_anomaly = int(oc_score < OCSVM_THRESHOLD)
 
-        # Autoencoder
+
         ae_score = None
         ae_anomaly = 0
         if self.ae_loaded:
@@ -50,7 +50,7 @@ class AnomalyDetector:
         src_port = sample.get('src_port', 'unknown')
         
 
-        # Host compromised flag
+    
         host_compromised = final_anomaly and sum(votes) >= 2  
 
         result = {
@@ -83,15 +83,15 @@ class AnomalyDetector:
           df = data.copy()
         X = transform_df(df, scaler=self.scaler).values
 
-        # Isolation Forest
+       
         if_scores = self.if_model.decision_function(X)
         if_dec = (if_scores < IF_THRESHOLD).astype(int)
 
-        # One-Class SVM
+      
         oc_scores = self.ocsvm_model.decision_function(X)
         oc_dec = (oc_scores < OCSVM_THRESHOLD).astype(int)
 
-        # Autoencoder
+     
         ae_scores = None
         ae_dec = np.zeros(len(X), dtype=int)
         if self.ae_loaded:
