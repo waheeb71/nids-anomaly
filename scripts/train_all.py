@@ -1,4 +1,4 @@
-"""مثال بسيط لسكربت تدريب: تهيئة scaler ثم تدريب كل نموذج"""
+
 
 import pandas as pd
 from src.preprocess import fit_scaler, transform_df
