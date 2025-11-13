@@ -205,8 +205,8 @@ MIT License – see [LICENSE](LICENSE).
 
 ## Author / المطور
 
-**English:** Waheeb Mahyoob Al-Sharabi
-**العربية:** وهيب مهيوب الشرعبي
+**English:** Waheeb Mahyoob Al-Humaeri
+**العربية:** وهيب مهيوب الحميري 
 
 
 ---
