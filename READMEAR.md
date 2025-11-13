@@ -211,6 +211,7 @@ nids-anomaly/
 
 ## المؤلف / المطور
 
-**English:** Waheeb Mahyoob Al-Sharabi
-**العربية:** هيب مهيوب الشرعبي
+**English:** Waheeb Mahyoob Al-Humaeri
+**العربية:** هيب مهيوب الحميري
+
 
